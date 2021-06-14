@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="55175e7d-012f-4721-b3de-c1f5f23a2a4a" name="Default Changelist" comment="" />
+    <list default="true" id="55175e7d-012f-4721-b3de-c1f5f23a2a4a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/venv/.ipynb_checkpoints/ExplanationFile-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/venv/.ipynb_checkpoints/ExplanationFile-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/venv/ExplanationFile.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/venv/ExplanationFile.ipynb" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,6 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1623415097121</updated>
       <workItem from="1623415119828" duration="2195000" />
+      <workItem from="1623671764801" duration="731000" />
     </task>
     <servers />
   </component>
@@ -66,7 +70,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
