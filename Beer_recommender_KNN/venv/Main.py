@@ -17,57 +17,76 @@ def preparedata(dataset):
     for data in dataset[1:]:
         coordinate_x_abv = float(data[1])
         coordinate_y_ibu = float(data[2])
+        type_of_beer = data[3]
 
         """Afronden naar 1 dec"""
         coordinate_x_abv = round(coordinate_x_abv, 1)
 
-        typeOfBeer = data[3]
-
-        coordinate = [coordinate_x_abv, coordinate_y_ibu]
-        set = [coordinate, typeOfBeer]
-        dataframe.append(set)
+        dataframe.append([coordinate_x_abv, coordinate_y_ibu, type_of_beer])
 
     return dataframe
 
 
+"""Nog een functie die de waardes checken van de input ewn controleren net zo lang tot de input goed is"""
 def askUserInput():
 
-    """Nog een functie die de waardes checken van de input ewn controleren net zo lang tot de input goed is"""
-    print('Vul het abv gehalte met 1 decimaal:')
-    abv = input()
+    while True:
+        try:
+            abv = float(input('Vul het ABV gehalte van uw drankje in:'))
+            abv = round(abv,1)
+            print("Het ABV gehalte wordt afgerond naar:",abv )
+            break;
+        except ValueError:
+                print("Input is not correct")
 
-    print('Vul het IBU gehalte in:')
-    ibu = float(input())
+    print()
+    while True:
+        try:
+            ibu = float(input('Vul het IBU gehalte in:'))
+            ibu = round(ibu,1)
+            print("Het IBU gehalte wordt afgerond naar: ", ibu)
+            break;
+        except ValueError:
+                print("Input is not correct")
 
-    userInput = [abv, ibu]
+    user_input = [abv, ibu]
 
-    return userInput
+    return user_input
 
 
+"""Functie die de afstanden van punt tot punt berekent en op volgorde terug geeft met de waardes van type bier"""
+def searchShortesLentghToPoint(user_input, datarow):
 
-def searchShortesLentghToPoint(datarow):
-
-    abv_main = 6.3
-    ibu_main = 50
+    abv_user = user_input[0]
+    ibu_user = user_input[1]
 
     distances = []
 
     for data in datarow:
-        for point in data[0]:
-            print(point)
+        abv_data = data[0]
+        ibu_data = data[1]
+        type_of_beer = data[2]
+
+        """Euclidean distance point to point berekent"""
+        distance_input_to_point = sqrt((abv_user-abv_data)**2 + (ibu_user-ibu_data)**2)
+
+        distances.append([distance_input_to_point, type_of_beer])
+
+    distances.sort()
+
+    return distances
 
 
 
-    '''def distanceBetweenTwoPoints():'''
 def mainloop():
     dataset = load_csv("NewDatasetBeers.csv")
     data =  preparedata(dataset)
 
+    user_input = askUserInput()
 
-
-    searchShortesLentghToPoint(data)
-
-
+    distances = searchShortesLentghToPoint(user_input, data)
+    for x in distances:
+        print(x)
 
 
 
