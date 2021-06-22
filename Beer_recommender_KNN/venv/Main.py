@@ -37,7 +37,6 @@ def count_beer_types(data):
 
     return list_of_beertypes
 
-
 """Nog een functie die de waardes checken van de input ewn controleren net zo lang tot de input goed is"""
 def ask_user_input():
 
@@ -64,8 +63,6 @@ def ask_user_input():
 
     return user_input
 
-
-
 """Functie die de afstanden van punt tot punt berekent en op volgorde terug geeft met de waardes van type bier"""
 def search_shortest_distance(user_input, datarow):
 
@@ -89,24 +86,25 @@ def search_shortest_distance(user_input, datarow):
     return distances
 
 """Functie die een die telt welke types ( neigbours) het meest in de buurt liggen"""
-def count_frequency_neigbours(list_of_shortest_distances, list_of_beertypes):
+def count_frequency_neigbours(list_of_shortest_distances, list_of_beertypes, k_value):
 
-    """De K value geeft aan hoe groot de straal is waarin de buren zich mogen bevinden om een classificatie uit te voeren
-    Zodra deze waarde dus veranderd, kan het ook zijn dat de voorspellling veranderd."""
-    k_value = 5
 
     list_of_nearest_neigbours = []
 
     """De 5 dichtsbijzijnde punten ( neighbours )"""
+    print("De waarde ligt het dichts in de buurt van:")
     for neighbours in list_of_shortest_distances[:k_value]:
         list_of_nearest_neigbours.append(neighbours[1])
+        print(neighbours)
 
     neighbours_with_frequency = []
 
     for neighbours in list_of_nearest_neigbours:
+
         frequency = list_of_nearest_neigbours.count(neighbours)
 
         neighbours_with_frequency.append([neighbours, frequency ])
+
 
     return neighbours_with_frequency
 
@@ -131,7 +129,6 @@ def make_prediction_beertype(list_nearest_neighbours):
 
     return prediction
 
-
 """Vergelijkt de uitkomst van het algoritme met de daadwerkelijke biertype en geeft een slagingspercentage terug"""
 def test_accuracy(data):
     """pakt de waardes 2 waardes uit de data lijst zonder het type erbij, het algoritme zal dan alleen nog kijken naar de nearest neighbour en
@@ -146,10 +143,10 @@ def test_accuracy(data):
         answer = x[2]
 
 
-        algorithm(test_data)
+        prediction = algoritme(data, test_data)
+
 
         print("Correcte type:" + answer )
-
 
         if answer == prediction:
             good_predictions = good_predictions + 1
@@ -159,65 +156,37 @@ def test_accuracy(data):
     print("Het algoritme heeft een slagingspercentage van " + str(round(accuracy_percentage_predictions,1)) + "%")
 
 
-
-def algorithm_user_input():
-    user_input = ask_user_input()
-
-    dataset = load_csv("NewDatasetBeers.csv")
-    data = prepare_data(dataset)
-
-    distances = search_shortest_distance("user_input", data)
+""""Functie het algoritme zijn werk laat doen en een uitkomst geeft van de K nearest neighbours"""
+def algoritme(data, type_of_program):
+    """De K value geeft aan hoe groot de straal is waarin de buren zich mogen bevinden om een classificatie uit te voeren
+        Zodra deze waarde dus veranderd, kan het ook zijn dat de voorspellling veranderd."""
+    k_value = 5
 
     list_of_beertypes = count_beer_types(data)
-    list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes)
-    make_prediction_beertype(list_neighbours_with_frequency)
+    distances = search_shortest_distance(type_of_program, data)
+    list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes, k_value)
+    prediction = make_prediction_beertype(list_neighbours_with_frequency)
+    return prediction
 
 
-def algorithm_test_data():
-    dataset = load_csv("NewDatasetBeers.csv")
-    data = prepare_data(dataset)
-
-    distances = search_shortest_distance("testdata", data)
-
-    list_of_beertypes = count_beer_types(data)
-    list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes)
-    make_prediction_beertype(list_neighbours_with_frequency)
-    
-
-    test_accuracy(data)
-
-
-def algorithm(type_of_algorithm):
-
-    dataset = load_csv("NewDatasetBeers.csv")
-    data = prepare_data(dataset)
-
-    distances = search_shortest_distance("type_of_algorithm", data)
-
-    list_of_beertypes = count_beer_types(data)
-    list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes)
-    make_prediction_beertype(list_neighbours_with_frequency)
-
-
-
-
-
-
-
+"""Dit is de mainloop die het alles laat runnen"""
 def mainloop():
     dataset = load_csv("NewDatasetBeers.csv")
+    data = prepare_data(dataset)
 
-    data =  prepare_data(dataset)
+    while True:
+        try:
+            choice = int(input("Kies je voor 1 zelf input invoeren of voor 2 algoritme testen?"))
+            if choice == 1:
+                user_input = ask_user_input()
+                algoritme(data, user_input)
+                break
+            if choice == 2:
+                test_accuracy(data)
+                break
+        except ValueError:
+                print("Input is not correct")
 
-    list_of_beertypes = count_beer_types(data)
-    user_input = ask_user_input()
-
-    distances = search_shortest_distance(user_input, data)
-
-    list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes)
-    make_prediction_beertype(list_neighbours_with_frequency)
-
-    test_accuracy(data)
+mainloop()
 
 
-algorithm_user_input()
