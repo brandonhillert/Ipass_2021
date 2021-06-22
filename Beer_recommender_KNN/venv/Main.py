@@ -155,7 +155,6 @@ def test_accuracy(data):
 
     print("Het algoritme heeft een slagingspercentage van " + str(round(accuracy_percentage_predictions,1)) + "%")
 
-
 """"Functie het algoritme zijn werk laat doen en een uitkomst geeft van de K nearest neighbours"""
 def algoritme(data, type_of_program):
     """De K value geeft aan hoe groot de straal is waarin de buren zich mogen bevinden om een classificatie uit te voeren
@@ -167,7 +166,6 @@ def algoritme(data, type_of_program):
     list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes, k_value)
     prediction = make_prediction_beertype(list_neighbours_with_frequency)
     return prediction
-
 
 """Dit is de mainloop die het alles laat runnen"""
 def mainloop():
