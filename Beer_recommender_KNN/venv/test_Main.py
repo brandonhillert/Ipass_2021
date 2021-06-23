@@ -4,8 +4,8 @@ import Main
 class TestMain(unittest.TestCase):
 
     def test_search_shortest_distance(self):
-        data = [[1],[2],[3]]
-        self.assertEqual()
+        data = [[],[2],[3]]
+        self.assertEqual( )
 
 
 
