@@ -138,13 +138,10 @@ def test_accuracy(data):
 
     for x in data[:]:
         total_values = total_values + 1
-
         test_data = [x[0],x[1]]
         answer = x[2]
 
-
         prediction = algoritme(data, test_data)
-
 
         print("Correcte type:" + answer )
 
