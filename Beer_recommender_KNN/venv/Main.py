@@ -120,7 +120,6 @@ def count_frequency_neigbours(list_of_shortest_distances, list_of_beertypes, k_v
 
     return neighbours_with_frequency
 
-
 """Vergelijkt de uitkomst van het algoritme met de daadwerkelijke biertype en geeft een slagingspercentage terug"""
 def test_accuracy(k_value, data):
     """pakt de waardes 2 waardes uit de data lijst zonder het type erbij, het algoritme zal dan alleen nog kijken naar de nearest neighbour en
@@ -145,7 +144,6 @@ def test_accuracy(k_value, data):
     print("Het algoritme heeft een slagingspercentage van " + str(round(accuracy_percentage_predictions,1)) + "%")
 
     return round(accuracy_percentage_predictions,1)
-
 
 """Functie maakt een voorspelling op basis van een bepaalde K waarde. De waardes die het meest voorkomen binnen de K waardes, wordt de voorspelling
     Bij een gelijkspel wordt de lijst op alfabetische volgorde ingedeeld, en zal de eerst in alfabetische volgorde voorspellen """
@@ -239,7 +237,6 @@ def train_test_split(data):
         print("De value K= "+ str(k_value) + " acurater op de subset dan op de enkele split")
     else:
         print("De value K= " + str(k_value) + " acurater op de split dan op de subset")
-
 
 """Dit is de mainloop die het alles laat runnen"""
 def mainloop():
