@@ -122,8 +122,6 @@ def count_frequency_neigbours(list_of_shortest_distances, list_of_beertypes, k_v
 
 
 
-
-
 """Vergelijkt de uitkomst van het algoritme met de daadwerkelijke biertype en geeft een slagingspercentage terug"""
 def test_accuracy(k_value, data):
     """pakt de waardes 2 waardes uit de data lijst zonder het type erbij, het algoritme zal dan alleen nog kijken naar de nearest neighbour en
@@ -148,6 +146,7 @@ def test_accuracy(k_value, data):
     print("Het algoritme heeft een slagingspercentage van " + str(round(accuracy_percentage_predictions,1)) + "%")
 
     return round(accuracy_percentage_predictions,1)
+
 
 
 
@@ -220,12 +219,6 @@ def mainloop():
 
 
 
-
-
-
-
-
-
 """Functie die de dataset splits in 5 gelijke stukken"""
 def split_list(data):
     number_of_splits = int(len(data) / 5)
@@ -240,36 +233,50 @@ def split_list(data):
     """
 def train_test_split(data):
     """"dataset wordt in 5 gesplits in gelijke lengtes"""
-    x = list(split_list(data))
+    split = list(split_list(data))
 
     k_value = ask_k_value()
 
-    split_1 = x[0]
-    split_2 = x[1]
-    split_3 = x[2]
-    split_4 = x[3]
-    split_5 = x[4]
+    a = split[0]
+    b = split[1]
+    c = split[2]
+    d = split[3]
+    e = split[4]
 
-    accuracy_values_sets = []
+    subset_1 = a + b + c + d
+    subset_2 = a + b + c + e
+    subset_3 = a + b + d + e
+    subset_4 = a + d + c + e
+    subset_5 = b + c + d + e
 
-    for k_values in range(1, k_value + 1):
+    """
+    Hieronder maak ik gebruik van de 80/20 verhouding BIJV:
+    subset 1 is ABCD en de losse split is E, ABCD = 80 en E is 20
+    Eerst allemaal 1 voor 1 testen en vervolgens met de 80/20 regel uitprinten
+    """
+    accuracy_k_subset_1 = test_accuracy(k_value, subset_1)
+    accuracy_k_subset_2 = test_accuracy(k_value, subset_2)
+    accuracy_k_subset_3 = test_accuracy(k_value, subset_3)
+    accuracy_k_subset_4 = test_accuracy(k_value, subset_4)
+    accuracy_k_subset_5 = test_accuracy(k_value, subset_5)
+
+    accuracy_k_split_a = test_accuracy(k_value, a)
+    accuracy_k_split_b = test_accuracy(k_value, b)
+    accuracy_k_split_c = test_accuracy(k_value, c)
+    accuracy_k_split_d = test_accuracy(k_value, d)
+    accuracy_k_split_e = test_accuracy(k_value, e)
 
 
-        a_1 = test_accuracy(k_values, split_1)
-        a_2 = test_accuracy(k_values, split_2)
-        a_3 = test_accuracy(k_values, split_3)
-        a_4 = test_accuracy(k_values, split_4)
-        a_5 = test_accuracy(k_values, split_5)
-
-        accuracy_values_sets.append( [k_values, a_1, a_2, a_3, a_4, a_5])
+    print("_________________RESULT_________________")
 
 
+    print("K Value: " + str(k_value))
+    print("Subset 1 accuracy: " + str(accuracy_k_subset_1)+ "  leftover split accuracy: " + str(accuracy_k_split_e ))
+    print("Subset 2 accuracy: " + str(accuracy_k_subset_2)+ "  leftover split accuracy: " + str(accuracy_k_split_d ))
+    print("Subset 3 accuracy: " + str(accuracy_k_subset_3)+ "  leftover split accuracy: " + str(accuracy_k_split_c ))
+    print("Subset 4 accuracy: " + str(accuracy_k_subset_4)+ "  leftover split accuracy: " + str(accuracy_k_split_b ))
+    print("Subset 5 accuracy: " + str(accuracy_k_subset_5)+ "  leftover split accuracy: " + str(accuracy_k_split_a ))
     print("")
-    print(accuracy_values_sets)
-
-
-
-
 
 
 

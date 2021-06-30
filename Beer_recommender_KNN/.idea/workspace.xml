@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="55175e7d-012f-4721-b3de-c1f5f23a2a4a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/venv/ExplanationFile.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/venv/ExplanationFile.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/venv/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/venv/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Documenten/Projectsamenvatting Brandon Hillert.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Documenten/Projectsamenvatting Brandon Hillert.docx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -140,7 +138,7 @@
       <workItem from="1623671764801" duration="43320000" />
       <workItem from="1624445378290" duration="9070000" />
       <workItem from="1624531529903" duration="4555000" />
-      <workItem from="1624992172934" duration="15047000" />
+      <workItem from="1624992172934" duration="20987000" />
     </task>
     <servers />
   </component>
@@ -162,7 +160,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Beer_recommender_KNN$csv_to_python.coverage" NAME="csv_to_python Coverage Results" MODIFIED="1623758159787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
-    <SUITE FILE_PATH="coverage/Beer_recommender_KNN$Main.coverage" NAME="Main Coverage Results" MODIFIED="1625058359269" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
+    <SUITE FILE_PATH="coverage/Beer_recommender_KNN$Main.coverage" NAME="Main Coverage Results" MODIFIED="1625067827915" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
     <SUITE FILE_PATH="coverage/Beer_recommender_KNN$test_Main.coverage" NAME="test_Main Coverage Results" MODIFIED="1624454319815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/venv" />
   </component>
 </project>
