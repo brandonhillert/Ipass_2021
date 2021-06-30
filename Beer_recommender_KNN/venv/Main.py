@@ -1,5 +1,6 @@
 from csv import reader
 from math import sqrt
+import random
 
 """Laad het csv bestand in python zodat het bewerkt kan worden"""
 def load_csv(filename):
@@ -44,24 +45,37 @@ def ask_user_input():
         try:
             abv = float(input('Vul het alcohol percentage ( ABV gehalte) van uw drankje in:'))
             abv = round(abv,1)
-            print("Het ABV gehalte wordt afgerond naar:",abv )
+
             break;
         except ValueError:
                 print("Input is not correct")
 
-    print()
+
     while True:
         try:
             ibu = float(input('Vul het IBU gehalte in:'))
             ibu = round(ibu,1)
-            print("Het IBU gehalte wordt afgerond naar: ", ibu)
+
             break;
         except ValueError:
                 print("Input is not correct")
 
+
+
     user_input = [abv, ibu]
 
     return user_input
+
+"""Functie die vraagt om een K value mee te geven"""
+def ask_k_value():
+    while True:
+        try:
+            k_value = int(input('Geef een K waarde voor het algoritme: '))
+            break;
+        except ValueError:
+                print("Input is not correct")
+
+    return k_value
 
 """Functie die de afstanden van punt tot punt berekent en op volgorde terug geeft met de waardes van type bier"""
 def search_shortest_distance(user_input, datarow):
@@ -88,25 +102,55 @@ def search_shortest_distance(user_input, datarow):
 """Functie die een die telt welke types ( neigbours) het meest in de buurt liggen"""
 def count_frequency_neigbours(list_of_shortest_distances, list_of_beertypes, k_value):
 
-
     list_of_nearest_neigbours = []
 
-    """De 5 dichtsbijzijnde punten ( neighbours )"""
     print("De waarde ligt het dichts in de buurt van:")
     for neighbours in list_of_shortest_distances[:k_value]:
         list_of_nearest_neigbours.append(neighbours[1])
         print(neighbours)
+
 
     neighbours_with_frequency = []
 
     for neighbours in list_of_nearest_neigbours:
 
         frequency = list_of_nearest_neigbours.count(neighbours)
-
         neighbours_with_frequency.append([neighbours, frequency ])
 
-
     return neighbours_with_frequency
+
+
+
+
+
+
+"""Vergelijkt de uitkomst van het algoritme met de daadwerkelijke biertype en geeft een slagingspercentage terug"""
+def test_accuracy(k_value, data):
+    """pakt de waardes 2 waardes uit de data lijst zonder het type erbij, het algoritme zal dan alleen nog kijken naar de nearest neighbour en
+    niet naar zijn eigen type. Zo kunnen we kijken of biertypes een beetje gegroepeerd staan op basis van abv en ibu"""
+    total_values = 0
+    good_predictions = 0
+
+    for x in data[:]:
+        total_values = total_values + 1
+        test_data = [x[0],x[1]]
+        answer = x[2]
+
+        prediction = algoritme(k_value, data, test_data)
+
+        print("Correcte type:" + answer )
+
+        if answer == prediction:
+            good_predictions = good_predictions + 1
+
+    accuracy_percentage_predictions = good_predictions/total_values * 100
+
+    print("Het algoritme heeft een slagingspercentage van " + str(round(accuracy_percentage_predictions,1)) + "%")
+
+    return round(accuracy_percentage_predictions,1)
+
+
+
 
 """Functie maakt een voorspelling op basis van een bepaalde K waarde. De waardes die het meest voorkomen binnen de K waardes, wordt de voorspelling"""
 def make_prediction_beertype(list_nearest_neighbours):
@@ -123,46 +167,23 @@ def make_prediction_beertype(list_nearest_neighbours):
         for neighbour in list_nearest_neighbours:
         print(neighbour)
     """
-
-
     print("Voorspelling: " + prediction)
 
     return prediction
 
-"""Vergelijkt de uitkomst van het algoritme met de daadwerkelijke biertype en geeft een slagingspercentage terug"""
-def test_accuracy(data):
-    """pakt de waardes 2 waardes uit de data lijst zonder het type erbij, het algoritme zal dan alleen nog kijken naar de nearest neighbour en
-    niet naar zijn eigen type. Zo kunnen we kijken of biertypes een beetje gegroepeerd staan op basis van abv en ibu"""
-    total_values = 0
-    good_predictions = 0
-
-    for x in data[:]:
-        total_values = total_values + 1
-        test_data = [x[0],x[1]]
-        answer = x[2]
-
-        prediction = algoritme(data, test_data)
-
-        print("Correcte type:" + answer )
-
-        if answer == prediction:
-            good_predictions = good_predictions + 1
-
-    accuracy_percentage_predictions = good_predictions/total_values * 100
-
-    print("Het algoritme heeft een slagingspercentage van " + str(round(accuracy_percentage_predictions,1)) + "%")
 
 """"Functie het algoritme zijn werk laat doen en een uitkomst geeft van de K nearest neighbours"""
-def algoritme(data, type_of_program):
+def algoritme(k_value, data, type_of_program):
     """De K value geeft aan hoe groot de straal is waarin de buren zich mogen bevinden om een classificatie uit te voeren
         Zodra deze waarde dus veranderd, kan het ook zijn dat de voorspellling veranderd."""
-    k_value = 5
-
     list_of_beertypes = count_beer_types(data)
     distances = search_shortest_distance(type_of_program, data)
     list_neighbours_with_frequency = count_frequency_neigbours(distances, list_of_beertypes, k_value)
     prediction = make_prediction_beertype(list_neighbours_with_frequency)
     return prediction
+
+
+
 
 """Dit is de mainloop die het alles laat runnen"""
 def mainloop():
@@ -174,14 +195,87 @@ def mainloop():
             choice = int(input("Kies je voor 1 zelf input invoeren of voor 2 algoritme testen?"))
             if choice == 1:
                 user_input = ask_user_input()
-                algoritme(data, user_input)
+                k_value = ask_k_value()
+
+                print("ABV: "+  str(user_input[0]) +" - IBU: "+ str(user_input[1]) +  " - K-VALUE: "+ str(k_value))
+                print(" ")
+                prediction = algoritme(k_value, data, user_input)
                 break
+
+
             if choice == 2:
-                test_accuracy(data)
+                k_value = ask_k_value()
+                test_accuracy(k_value, data)
                 break
         except ValueError:
                 print("Input is not correct")
 
-mainloop()
+
+
+
+
+
+#mainloop()
+
+
+
+
+
+
+
+
+
+
+"""Functie die de dataset splits in 5 gelijke stukken"""
+def split_list(data):
+    number_of_splits = int(len(data) / 5)
+
+    for i in range(0, len(data), number_of_splits):
+        yield data[i:i + number_of_splits]
+
+"""
+    Deze functie deelt de dataset op in 5 verschillende lijsten
+    Vervolgens test die de accuracy op de eerste 4 afhankelijk van de K
+    Met welke K beste accuracy?
+    """
+def train_test_split(data):
+    """"dataset wordt in 5 gesplits in gelijke lengtes"""
+    x = list(split_list(data))
+
+    k_value = ask_k_value()
+
+    split_1 = x[0]
+    split_2 = x[1]
+    split_3 = x[2]
+    split_4 = x[3]
+    split_5 = x[4]
+
+    accuracy_values_sets = []
+
+    for k_values in range(1, k_value + 1):
+
+
+        a_1 = test_accuracy(k_values, split_1)
+        a_2 = test_accuracy(k_values, split_2)
+        a_3 = test_accuracy(k_values, split_3)
+        a_4 = test_accuracy(k_values, split_4)
+        a_5 = test_accuracy(k_values, split_5)
+
+        accuracy_values_sets.append( [k_values, a_1, a_2, a_3, a_4, a_5])
+
+
+    print("")
+    print(accuracy_values_sets)
+
+
+
+
+
+
+
+dataset = load_csv("NewDatasetBeers.csv")
+data = prepare_data(dataset)
+
+train_test_split(data)
 
 
